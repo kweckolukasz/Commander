@@ -13,8 +13,22 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: Build
 
-- script: dotnet test --configuration $(buildConfiguration)
-  displayName: Test
+ - script: dotnet build --configuration $(buildConfiguration)
+   displayName: Build
+
+ - script: dotnet test --configuration $(buildConfiguration)
+   displayName: Test
+
+ - task: DotNetCoreCLI@2
+  inputs:
+	command: publish
+	publishWebProjects: false
+	arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+	zipAfterPublish: true
+
+ 
+ - task: PublishBuildArtifacts@1
+   inputs:
+	pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+	artifactName: 'Commander'

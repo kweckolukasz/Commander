@@ -2,7 +2,8 @@
 # Build and test ASP.NET Core projects targeting .NET Core.
 # Add steps that run tests, create a NuGet package, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
-trigger: master
+trigger: 
+ master
 
 pool: 
  vmImage: 'ubuntu-latest'
@@ -18,13 +19,13 @@ steps:
   displayName: Test
 
 - task: DotNetCoreCLI@2
-    inputs:
-     command: publish
-     publishWebProjects: false
-     arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-     zipAfterPublish: true
+  inputs:
+   command: publish
+   publishWebProjects: false
+   arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+   zipAfterPublish: true
 
 - task: PublishBuildArtifacts@1
-    inputs:
-     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-     artifactName: 'Commander'
+  inputs:
+   pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+   artifactName: 'Commander'

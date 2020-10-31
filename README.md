@@ -39,45 +39,6 @@ This project was configured for Continous Development (Azure Pipelines), now i t
 Pipelines YML part for CD is commented and Pipelines itself set to manual develop.
 Azure Platform release produce 500 error, didn't find cause of this problem, not enough time :(
 
-
-## Code Examples
-
-Nice usage of JsonConvert:
-It serializes objects to Json string so C# put them in one String object and equals can check only content of objects and you don't have to override equals
-
-
-
-public class UnitTest1{
-public UnitTest1(){
-arrange = new Arrange();
-_repo = arrange.getRepo();
-_mapper = arrange.getMapper();
-commands = arrange.getCommands();
-}
-
-Arrange arrange;
-private static Mock _repo;
-private static IMapper _mapper;
-private Command[] commands;
-
-
-[Fact]
-public void Test1()
-{
-CommandsController controller = new CommandsController(_repo.Object, _mapper);
-//Act
-var ar = controller.GetCommandById(0).Result as OkObjectResult;
-CommandReadDTO commandDTOFromController =(CommandReadDTO) ar.Value;
-Command commandFromController = _mapper.Map(commandDTOFromController);
-Command commandFromArray = commands.FirstOrDefault(a => a.Id == 0);
-var commandFromControllerSerialized = JsonConvert.SerializeObject(commandFromController);
-var commandFromArrayDeserialized = JsonConvert.SerializeObject(commandFromArray);
-
-//Assert
-Assert.Equal(commandFromControllerDeserialized, commandFromArrayDeserialized);
-}
-}`
-
 ## TODO
 
 To-do list:

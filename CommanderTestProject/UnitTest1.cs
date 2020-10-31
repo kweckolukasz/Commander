@@ -41,11 +41,11 @@ namespace Commander.TEST
             CommandReadDTO commandDTOFromController =(CommandReadDTO) ar.Value;
             Command commandFromController = _mapper.Map<Command>(commandDTOFromController);
             Command commandFromArray = commands.FirstOrDefault(a => a.Id == 0);
-            var commandFromControllerDeserialized = JsonConvert.SerializeObject(commandFromController);
-            var commandFromArrayDeserialized = JsonConvert.SerializeObject(commandFromArray);
+            var commandFromControllerSerialized = JsonConvert.SerializeObject(commandFromController);
+            var commandFromArraySerialized = JsonConvert.SerializeObject(commandFromArray);
 
             //Assert
-            Assert.Equal(commandFromControllerDeserialized, commandFromArrayDeserialized);
+            Assert.Equal(commandFromControllerSerialized, commandFromArraySerialized);
         }
     }
 }
